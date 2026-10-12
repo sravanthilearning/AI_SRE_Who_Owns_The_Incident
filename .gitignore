@@ -1,0 +1,8 @@
+# files written by Demo/demo.py at runtime
+Demo/state.json
+Demo/audit.jsonl
+__pycache__/
+*.pyc
+# never commit slides
+*.pptx
+*.ppt

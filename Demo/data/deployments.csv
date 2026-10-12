@@ -1,0 +1,2 @@
+timestamp,service,version,change
+01:56,fraud-service,v2.8,Retry policy changed: max_attempts 2 -> 4; timeout 800ms -> 1000ms

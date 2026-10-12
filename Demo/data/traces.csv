@@ -1,0 +1,11 @@
+trace_id,span_id,parent_span_id,service,operation,start_time,duration_ms,status
+tr-001,sp-1,,checkout-api,POST /checkout,02:13:00.000,4800,ERROR
+tr-001,sp-2,sp-1,payment-service,authorize,02:13:00.050,4300,ERROR
+tr-001,sp-3,sp-2,fraud-service,score-risk,02:13:00.120,3900,ERROR
+tr-001,sp-4,sp-3,external-risk-api,POST /score,02:13:00.200,3200,ERROR
+tr-001,sp-5,sp-3,external-risk-api,retry-1,02:13:01.300,1000,ERROR
+tr-001,sp-6,sp-3,external-risk-api,retry-2,02:13:02.450,1000,ERROR
+tr-002,sp-7,,checkout-api,POST /checkout,02:00:00.000,800,OK
+tr-002,sp-8,sp-7,payment-service,authorize,02:00:00.050,420,OK
+tr-002,sp-9,sp-8,fraud-service,score-risk,02:00:00.100,380,OK
+tr-002,sp-10,sp-9,external-risk-api,POST /score,02:00:00.150,180,OK

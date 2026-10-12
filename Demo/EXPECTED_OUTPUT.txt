@@ -1,0 +1,28 @@
+EXPECTED OUTPUT — INVESTIGATION SUMMARY
+
+Checkout P95: 800 ms -> 4800 ms
+Error rate: 0.4% -> 6.2%
+CPU: 54% -> 57% (not a strong saturation signal)
+
+Trace evidence:
+- checkout-api POST /checkout: 4800 ms
+- payment-service authorize: 4300 ms
+- fraud-service score-risk: 3900 ms
+- external-risk-api POST /score: 3200 ms
+
+Log evidence:
+- external-risk-api timeout after 1000ms
+- retry attempt=1
+- retry attempt=2
+- retry budget nearly exhausted
+- checkout deadline exceeded
+
+Change correlation:
+- 01:56 fraud-service v2.8 changed retry policy:
+  max_attempts 2 -> 4; timeout 800ms -> 1000ms
+
+Leading hypothesis:
+External risk API latency combined with increased retry allowance amplified downstream latency and checkout timeouts.
+
+Caution:
+This is a synthetic, evidence-supported hypothesis—not proof that the deployment caused the external dependency slowdown. Validate before remediation.

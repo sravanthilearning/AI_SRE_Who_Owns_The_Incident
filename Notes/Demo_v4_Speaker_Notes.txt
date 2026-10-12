@@ -1,0 +1,200 @@
+WHO OWNS THE INCIDENT? — LIVE DEMO SPEAKER NOTES  (console v4)
+AI SRE Meetup Hyderabad · Sun 11 Oct 2026 · Demo slot 12:00–19:30 (7.5 min)
+File: Demo\incident_console_v4.html   ·   synthetic data · offline · no network · no LLM
+
+
+====================================================================
+1. SETUP  (10 minutes before)
+====================================================================
+  1. Open Demo\incident_console_v4.html in Edge, then press F11.
+  2. Press R (or click ↺ Reset)  ->  clean state: Mode A, step 0, Investigation tab.
+  3. Theme: Dark. Press T for Light if the projector looks washed out.
+  4. Projector at 1280×720 and text feels tight?  Ctrl + −  once  (Ctrl + 0 resets).
+  5. Arrange Alt+Tab so it goes  deck -> console -> deck.
+  6. Focus / Do Not Disturb ON. Teams and Outlook closed.
+
+
+====================================================================
+2. HOW TO DRIVE IT
+====================================================================
+  MANUAL (you set the pace)
+    Press  Next ›  (or →  /  PageDown) for every step.
+    At the policy gate: click the first reason chip -> DENY,
+                        then the second chip -> APPROVE, then Next ›.
+
+  AUTO-PLAY (hands-free)
+    Click 1×  (or 1.5× / 2× if you are late). It advances by itself and
+    simulates your DENY -> APPROVE (labelled on screen as a simulation).
+    Next › still works while it plays: it jumps to the next step now.
+
+  Space = pause / resume      S = stop (rewind this mode)      R = reset everything
+
+  KEYS
+    → / PageDown  Next step        Space   Play / pause       S   Stop
+    R             Reset (clean)    1 / 2   Mode A / Mode B    T   Theme
+    I  Investigation    C  Scorecard    P  Postmortem    L  Audit trail
+    Esc  back to Investigation        F11  full screen
+
+
+====================================================================
+3. SCREEN MAP  (say it once, in one breath)
+====================================================================
+  LEFT    Demo workflow — the 7 stages of an incident. The active stage glows green.
+  MIDDLE  System status (what customers feel) + the four W's (how agents fail quietly).
+  RIGHT   Activity log — every action, its evidence, and who approved it.
+
+  THE FOUR W's (scored live on screen)
+    W1 Wrong       Is every claim backed by evidence?
+    W2 Wandering   Is it converging on the real cause?
+    W3 Wasteful    What is it spending while you burn?
+    W4 Wayward     Is it staying inside its lane?
+
+
+====================================================================
+4. OPENING  (before the first Next)
+====================================================================
+  SAY   "This is a simulation, so it behaves the same every time.
+         The pattern is what matters, not the vendor."
+  SAY   "Same incident, same telemetry. First — the agent most teams ship."
+
+
+====================================================================
+5. MODE A · AUTOPILOT AGENT   (5 steps · about 1½ min at 1×)
+====================================================================
+  (@ = elapsed time when auto-playing at 1×; halve it at 2×)
+
+  A1  02:13  ALERT AUTO-ASSIGNED                                 Next ›   @ 0:00
+      SAY    "No human was paged. The agent is 'handling it'."
+      POINT  Human owner tile: "— nobody".
+             W4 Wayward is already red: a shared, cluster-admin account.
+
+  A2  02:13  INVESTIGATION — ONE QUERY                           Next ›   @ 0:14
+      SAY    "One metric. No traces, no logs, no change history.
+              And HIGH confidence that nobody ever calibrated."
+      POINT  W1 Wrong turns red: a claim with zero evidence.
+             W2 Wandering is amber: it didn't wander — it didn't look at all.
+
+  A3  02:14  RESTART + SCALE — NOBODY APPROVED                   Next ›   @ 0:32
+      SAY    "Shared account, cluster-admin. It restarted and scaled
+              production. Nobody approved this."
+      POINT  Control plane: NO GATE CONFIGURED.
+             Workflow: Explain and Decide are marked SKIPPED.
+             W4 Wayward: ACTED · NO GATE.
+
+  A4  02:16  ALL SYSTEMS OPERATIONAL                             Next ›   @ 0:50
+      DO     Stay silent for 3 seconds. (Space to hold if the room reacts.)
+      SAY    "Everything is green. Would you go back to sleep?"
+      POINT  Green banner. W1 Wrong: "self-graded" — it graded its own homework.
+
+  A5  02:31  REALITY CHECK — SUPPORT ESCALATES                   Next ›   @ 1:06
+      SAY    "Green means responding — not right. Look at the activity log:
+              approver dash, evidence dash. So — who owns this incident?"
+      POINT  Red banner + Ownership check panel.
+             W3 Wasteful: two cents of tokens — and 318 dropped payments.
+      OPT    Laugh line: press P -> "Who owns this document? ???"
+             Then Esc (and Space if auto-playing).
+
+  -> Manual: press "Next › Mode B".   Auto-play switches by itself (@ ~1:30).
+
+
+====================================================================
+6. MODE B · ACCOUNTABLE AGENT   (10 steps · about 3¼ min at 1×)
+====================================================================
+  B0  MODE B SPLASH
+      SAY    "Same model. A different system around it."
+
+  B1  02:13  HUMAN PAGED, AGENT ASSISTS                          Next ›   @ 1:34
+      SAY    "A named human owns this from minute one. The agent has its own
+              identity and read-only tools."
+      POINT  Human owner tile turns green. W4 Wayward: READ-ONLY.
+
+  B2  02:14  METRICS ACROSS THE CHAIN                            Next ›   @ 1:48
+      SAY    "Traffic and CPU are flat — so scaling was never the answer."
+      POINT  W1 Wrong is green: every fact cites its source.
+
+  B3  02:15  TRACE WATERFALL                                     Next ›   @ 2:04
+      SAY    "Three attempts times a one-second timeout: 3.2 of the 4.8 seconds
+              spent waiting on one dependency."
+      POINT  The waterfall bars. W2 Wandering: critical path found, 0 repeats.
+
+  B4  02:16  LOGS + UNTRUSTED INPUT                              Next ›   @ 2:22
+      SAY    "And a trap: a log line telling the AI to scale to 50 replicas.
+              Telemetry is attacker-controllable input. It's flagged, not obeyed."
+      POINT  Amber UNTRUSTED INPUT flag. W4 Wayward: injection ignored + reported.
+
+  B5  02:17  RECENT CHANGES — v2.8 AT 01:56                      Next ›   @ 2:44
+      SAY    "Retry policy changed 14 minutes earlier. Correlation — not
+              causation yet."
+
+  B6  02:18  RCA — MEDIUM 0.62                                   Next ›   @ 2:58
+      SAY    "Facts with references, a hypothesis, the unknowns — and an
+              honest MEDIUM."
+      POINT  Workflow moves to Explain. W2: converged in 5 steps.
+             W3 Wasteful: 13 cents of a $5 budget.
+
+  B7  02:20  POLICY GATE -> HUMAN DECISION                       Next ›   @ 3:22
+      SAY    "The policy engine is plain code, outside the LLM. MEDIUM risk,
+              100% blast radius — so a human has to approve."
+      DO     Manual: click chip "Need dependency-side confirmation first" -> DENY.
+             Auto-play does this for you (@ ~3:40).
+      SAY    "That's me deciding, not the agent. I deny first — the agent does
+              nothing, and the denial is recorded too."
+      DO     Manual: click chip "Trace + logs sufficient; reversible…" -> APPROVE.
+             Auto-play does this for you (@ ~3:50).
+      SAY    "Now I approve: named, reasoned, expiring, scoped to this one rollback."
+      POINT  Workflow: Decide. W4 Wayward: GATED. Next › is disabled until you decide.
+
+  B8  02:22  SCOPED ROLLBACK EXECUTES                            Next ›   @ 3:51
+      SAY    "A different identity executes — and only this allow-listed action."
+      POINT  Acting identity: agent-sre-remediator. W4 Wayward: SCOPED WRITE.
+
+  B9  02:25–02:37  VERIFICATION                                  Next ›   @ 4:05
+      SAY    "Verified with fresh telemetry against targets agreed beforehand.
+              The risk API is still slow — so it gets an owner, not a shrug."
+      POINT  Gates: 4 PASS, 1 WATCH. Customer tiles turn green.
+
+  B10 02:41  CLOSED WITH A NAMED SIGN-OFF                        Next ›   @ 4:25
+      SAY    "The agent did most of the work. A human owned every decision
+              that mattered."
+      POINT  "Who owns what" panel. All four W's green.
+
+  Auto-play shows "Auto-play complete" (@ ~4:45).
+
+
+====================================================================
+7. WRAP-UP  (about 45 seconds)
+====================================================================
+  Press C  (Scorecard tab)
+      SAY    "Same incident, same telemetry, same model. Autopilot: four W's red
+              and no owner. Accountable: four W's green and every action
+              attributable."
+      POINT  The take-home checklist at the bottom of the scorecard.
+
+  Press P  (Postmortem tab)
+      SAY    "And the postmortem writes itself from the audit trail."
+
+  Then Alt+Tab to the deck. Next slide: "AI can take the action.
+  Only humans can take the responsibility."
+
+
+====================================================================
+8. TIMING CHEAT-SHEET
+====================================================================
+  Auto-play 1×     ~4¾ min   default — narrate, Space to let a line land
+  Auto-play 1.5×   ~3¼ min   running a little late
+  Auto-play 2×     ~2½ min   very late, or rehearsal
+  Manual (Next ›)  your pace — aim for ~20 s per step, ~5½ min total
+
+
+====================================================================
+9. IF SOMETHING GOES WRONG
+====================================================================
+  Console looks stuck         Press R (reset) — or F5 to reload. Then 2 + 1× for Mode B only.
+  APPROVE rejected (manual)   The reason needs 8+ characters — click a chip instead of typing.
+  Running late                Click 2× mid-run and skip the postmortem.
+  Clicker sends "B"           That jumps to Mode B. Press R to reset, then 1.
+  Browser unavailable         In the Demo\ terminal:
+                                py demo.py autopilot
+                                py demo.py full --approve-as sravanthi.naga --deny-first
+  Laptop dies                 Narrate from the deck: trace, RCA, policy-gate and verify slides
+                              tell the same story.
